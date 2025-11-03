@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { IconInfoCircle } from '@tabler/icons-react';
 
 export default function CustomerProfitabilityWidget({ customer, profitability }) {
@@ -133,21 +133,26 @@ export default function CustomerProfitabilityWidget({ customer, profitability })
                         </h3>
                     </div>
                     <div className="card-body">
-                        <div style={{ height: '300px' }}>
+                        <div style={{ height: '300px', padding: '10px' }}>
                             <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
+                                <PieChart margin={{ top: 10, right: 20, bottom: 70, left: 20 }}>
                                     <Pie
                                         data={revenueBreakdown}
                                         cx="50%"
-                                        cy="50%"
+                                        cy="40%"
                                         labelLine={false}
-                                        label={({ name, percentage }) => `${name}: ${percentage}%`}
-                                        outerRadius={80}
+                                        label={(entry) => {
+                                            const total = revenueBreakdown.reduce((sum, item) => sum + item.value, 0);
+                                            const percentage = ((entry.value / total) * 100).toFixed(1);
+                                            // Only show label if percentage is >= 5% to avoid overlapping
+                                            return parseFloat(percentage) >= 5 ? `${entry.name}: ${percentage}%` : '';
+                                        }}
+                                        outerRadius={65}
                                         fill="#8884d8"
                                         dataKey="value"
                                         labelStyle={{ 
                                             fill: '#212529', 
-                                            fontSize: '12px', 
+                                            fontSize: '11px', 
                                             fontWeight: '600' 
                                         }}
                                     >
@@ -156,13 +161,36 @@ export default function CustomerProfitabilityWidget({ customer, profitability })
                                         ))}
                                     </Pie>
                                     <Tooltip 
-                                        formatter={(value) => [formatCurrency(value), 'Amount']}
+                                        formatter={(value, name) => {
+                                            const total = revenueBreakdown.reduce((sum, item) => sum + item.value, 0);
+                                            const percentage = ((value / total) * 100).toFixed(1);
+                                            return [`${formatCurrency(value)} (${percentage}%)`, 'Amount'];
+                                        }}
                                         labelStyle={{ color: '#212529', fontWeight: '600' }}
                                         contentStyle={{ 
                                             backgroundColor: '#ffffff', 
                                             border: '1px solid #dee2e6',
                                             borderRadius: '6px',
                                             color: '#212529'
+                                        }}
+                                    />
+                                    <Legend 
+                                        verticalAlign="bottom" 
+                                        height={60}
+                                        iconType="circle"
+                                        formatter={(value, entry) => {
+                                            const item = revenueBreakdown.find(r => r.name === value);
+                                            if (item) {
+                                                const total = revenueBreakdown.reduce((sum, i) => sum + i.value, 0);
+                                                const percentage = ((item.value / total) * 100).toFixed(1);
+                                                return `${value} (${percentage}%)`;
+                                            }
+                                            return value;
+                                        }}
+                                        wrapperStyle={{
+                                            paddingTop: '10px',
+                                            fontSize: '12px',
+                                            fontWeight: '500'
                                         }}
                                     />
                                 </PieChart>

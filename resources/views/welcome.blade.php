@@ -14,7 +14,7 @@
         <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
         <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png">
         <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png">
-        <meta name="theme-color" content="#3385ff">
+        <meta name="theme-color" content="#222551">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

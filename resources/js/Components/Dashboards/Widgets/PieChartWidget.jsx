@@ -155,55 +155,56 @@ export default function PieChartWidget({ widget, dashboardId, isEditing }) {
                     )}
                 </div>
             </div>
-                    <div className="card-body" style={{ padding: '20px', minHeight: '400px' }}>
-                        <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                        <Pie
-                            data={data}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={showLabels ? renderCustomLabel : false}
-                            outerRadius={120}
-                            innerRadius={20}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {data.map((entry, index) => (
-                                <Cell 
-                                    key={`cell-${index}`} 
-                                    fill={COLORS[index % COLORS.length]} 
-                                />
-                            ))}
-                        </Pie>
-                        <Tooltip 
-                            formatter={formatTooltipValue}
-                            contentStyle={{
-                                backgroundColor: '#fff',
-                                border: '1px solid #dee2e6',
-                                borderRadius: '4px',
-                                fontSize: '12px'
-                            }}
+            <div className="card-body" style={{ padding: '20px', minHeight: '400px', display: 'flex', flexDirection: 'column' }}>
+                <ResponsiveContainer width="100%" height="100%">
+            <PieChart margin={{ top: 20, right: 20, bottom: 80, left: 20 }}>
+                <Pie
+                    data={data}
+                    cx="50%"
+                    cy="45%"
+                    labelLine={false}
+                    label={showLabels ? renderCustomLabel : false}
+                    outerRadius={100}
+                    innerRadius={20}
+                    fill="#8884d8"
+                    dataKey="value"
+                >
+                    {data.map((entry, index) => (
+                        <Cell 
+                            key={`cell-${index}`} 
+                            fill={COLORS[index % COLORS.length]} 
                         />
-                        <Legend 
-                            verticalAlign="bottom" 
-                            height={60}
-                            iconType="circle"
-                            formatter={(value, entry) => {
-                                if (!Array.isArray(data) || data.length === 0) return value;
-                                const total = data.reduce((sum, item) => sum + (item.value || 0), 0);
-                                const percentage = total > 0 ? ((entry.value / total) * 100).toFixed(1) : 0;
-                                return `${value} (${percentage}%)`;
-                            }}
-                            wrapperStyle={{
-                                paddingTop: '20px',
-                                fontSize: '14px',
-                                fontWeight: '500'
-                            }}
-                        />
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
+                    ))}
+                </Pie>
+                <Tooltip 
+                    formatter={formatTooltipValue}
+                    contentStyle={{
+                        backgroundColor: '#fff',
+                        border: '1px solid #dee2e6',
+                        borderRadius: '4px',
+                        fontSize: '12px'
+                    }}
+                />
+                <Legend 
+                    verticalAlign="bottom" 
+                    height={80}
+                    iconType="circle"
+                    formatter={(value, entry) => {
+                        if (!Array.isArray(data) || data.length === 0) return value;
+                        const total = data.reduce((sum, item) => sum + (item.value || 0), 0);
+                        const percentage = total > 0 ? ((entry.value / total) * 100).toFixed(1) : 0;
+                        return `${value} (${percentage}%)`;
+                    }}
+                    wrapperStyle={{
+                        paddingTop: '30px',
+                        fontSize: '13px',
+                        fontWeight: '500',
+                        lineHeight: '1.6'
+                    }}
+                />
+            </PieChart>
+        </ResponsiveContainer>
+    </div>
         </div>
     );
 }

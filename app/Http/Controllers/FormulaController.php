@@ -219,7 +219,7 @@ class FormulaController extends Controller
 
         $result = $this->formulaService->testFormula(
             $data['expression'],
-            $data['sample_data'],
+            $data['sample_data'] ?? [],
             $product
         );
 

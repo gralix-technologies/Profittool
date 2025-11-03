@@ -29,7 +29,7 @@ export default function Login() {
                             className="mb-3"
                             style={{ height: '48px', width: 'auto' }}
                         />
-                        <h1 className="h2" style={{ color: '#3385ff' }}>Portfolio Analytics Platform</h1>
+                        <h1 className="h2" style={{ color: '#222551' }}>Portfolio Analytics Platform</h1>
                         <p className="text-muted">Powered by Gralix</p>
                     </div>
                     

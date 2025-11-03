@@ -166,7 +166,8 @@ class FormulaEngine
             }
         }
 
-        if (!preg_match('/^[a-zA-Z0-9\s\+\-\*\/\(\)\,\.\>\<\=\_]+$/', $expression)) {
+        // Allow WHERE clause in expressions
+        if (!preg_match('/^[a-zA-Z0-9\s\+\-\*\/\(\)\,\.\>\<\=\_\"\"]+$/', $expression)) {
             throw new FormulaException('Expression contains invalid characters');
         }
     }
@@ -176,9 +177,37 @@ class FormulaEngine
     {
         $tokens = [];
         $currentToken = '';
+        $insideString = false;
+        $stringDelimiter = '';
         
         for ($i = 0; $i < strlen($expression); $i++) {
             $char = $expression[$i];
+            
+            // Handle string literals
+            if ($char === '"' || $char === "'") {
+                if ($insideString && $char === $stringDelimiter) {
+                    // End of string
+                    $tokens[] = ['type' => 'string', 'value' => $currentToken];
+                    $currentToken = '';
+                    $insideString = false;
+                    $stringDelimiter = '';
+                    continue;
+                } elseif (!$insideString) {
+                    // Start of string
+                    if ($currentToken !== '') {
+                        $tokens[] = $this->createToken($currentToken);
+                        $currentToken = '';
+                    }
+                    $insideString = true;
+                    $stringDelimiter = $char;
+                    continue;
+                }
+            }
+            
+            if ($insideString) {
+                $currentToken .= $char;
+                continue;
+            }
             
             if (ctype_space($char)) {
                 if ($currentToken !== '') {
@@ -259,10 +288,15 @@ class FormulaEngine
     private function extractFieldReferences(array $tokens): array
     {
         $fields = [];
+        $keywords = ['WHERE'];
         
         foreach ($tokens as $token) {
             if ($token['type'] === 'field' && !empty($token['value'])) {
-                $fields[] = $token['value'];
+                $value = $token['value'];
+                // Skip keywords like WHERE
+                if (!in_array(strtoupper($value), $keywords)) {
+                    $fields[] = $value;
+                }
             }
         }
         
@@ -306,9 +340,24 @@ class FormulaEngine
                     $invalid[] = $functionName;
                 }
                 
-                // Check for empty function calls
+                // Check for empty function calls (allow * for COUNT)
                 $args = $this->extractFunctionArguments($tokens, $i);
-                if (empty($args)) {
+                // Check if it's a COUNT(*) call
+                $isCountStar = false;
+                if ($functionName === 'COUNT') {
+                    $parenCount = 0;
+                    $j = $i + 1;
+                    while ($j < count($tokens)) {
+                        if ($tokens[$j]['value'] === '(') $parenCount++;
+                        elseif ($tokens[$j]['value'] === ')') $parenCount--;
+                        if ($parenCount === 1 && isset($tokens[$j + 1]) && $tokens[$j + 1]['value'] === '*' && isset($tokens[$j + 2]) && $tokens[$j + 2]['value'] === ')') {
+                            $isCountStar = true;
+                            break;
+                        }
+                        $j++;
+                    }
+                }
+                if (empty($args) && !$isCountStar) {
                     $invalid[] = "Empty function call: {$functionName}()";
                 }
                 
@@ -317,34 +366,39 @@ class FormulaEngine
                 $j = $i + 1;
                 $inFunction = false;
                 $lastTokenType = null;
+                $lastWasOperator = false;
                 while ($j < count($tokens)) {
                     $token = $tokens[$j];
                     if ($token['value'] === '(') {
                         $parenCount++;
                         $inFunction = true;
+                        $lastWasOperator = false;
                         // Check if there's a comma right after opening parenthesis
                         if ($j + 1 < count($tokens) && $tokens[$j + 1]['value'] === ',') {
                             $invalid[] = "Leading comma in function call: {$functionName}()";
                         }
                     } elseif ($token['value'] === ')') {
                         $parenCount--;
+                        $lastWasOperator = false;
                         if ($parenCount === 0) {
                             // Check if there's a comma just before the closing parenthesis
                             if ($j > 0 && $tokens[$j - 1]['value'] === ',') {
                                 $invalid[] = "Trailing comma in function call: {$functionName}()";
                             }
-                            // Check if last token before closing parenthesis is an operator
-                            if ($lastTokenType === 'operator') {
+                            // Check if last token before closing parenthesis is an operator (but allow where clauses)
+                            if ($lastTokenType === 'operator' && $lastWasOperator) {
                                 $invalid[] = "Incomplete arithmetic in function call: {$functionName}()";
                             }
                             break;
                         }
                     } else {
                         $lastTokenType = $token['type'];
-                        // Check for double operators
-                        if ($token['type'] === 'operator' && $lastTokenType === 'operator') {
+                        // Check for double operators (allow = after fields for WHERE clauses)
+                        $isEquals = ($token['type'] === 'operator' && $token['value'] === '=');
+                        if ($token['type'] === 'operator' && $lastWasOperator && !$isEquals) {
                             $invalid[] = "Double operator in function call: {$functionName}()";
                         }
+                        $lastWasOperator = ($token['type'] === 'operator');
                     }
                     $j++;
                 }

@@ -119,15 +119,22 @@ class FormulaService
             'errors' => $validationResult->getErrors(),
             'warnings' => $validationResult->getWarnings(),
             'execution_result' => null,
-            'execution_error' => null
+            'execution_error' => null,
+            'message' => $validationResult->isValid() ? 'Formula is valid' : 'Formula validation failed'
         ];
 
         if ($validationResult->isValid()) {
             try {
                 $parsed = $this->engine->parseExpression($expression);
-                $result['execution_result'] = $this->engine->executeFormula($parsed, $sampleData);
+                // Only execute if sample data is provided
+                if (!empty($sampleData)) {
+                    $result['execution_result'] = $this->engine->executeFormula($parsed, $sampleData);
+                } else {
+                    $result['message'] = 'Formula is valid. No sample data provided for execution.';
+                }
             } catch (\Exception $e) {
                 $result['execution_error'] = $e->getMessage();
+                $result['valid'] = false;
             }
         }
 

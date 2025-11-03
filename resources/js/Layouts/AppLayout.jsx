@@ -43,13 +43,19 @@ export default function AppLayout({ children, title }) {
 
     // Handle flash messages
     useEffect(() => {
+        console.log('AppLayout useEffect triggered with flash:', flash);
         if (flash?.success) {
+            console.log('Showing success toast:', flash.success);
             showSuccess(flash.success);
+        } else if (flash?.message) {
+            console.log('Showing message toast:', flash.message);
+            showSuccess(flash.message);
         }
         if (flash?.error) {
+            console.log('Showing error toast:', flash.error);
             showError(flash.error);
         }
-    }, [flash, showSuccess, showError]);
+    }, [flash]);
 
     // Handle logout success/error
     const handleLogoutSuccess = () => {
@@ -96,8 +102,18 @@ export default function AppLayout({ children, title }) {
             
             <div className="page" style={{backgroundColor: '#000000', margin: 0, padding: 0}}>
                 {/* Authentic Tabler Header Navigation */}
-                <header className="navbar navbar-expand-md navbar-light d-print-none w-100" data-bs-theme="dark" style={{backgroundColor: '#1f2937', width: '100vw', margin: 0, padding: 0}}>
+                <header className="navbar navbar-expand-md navbar-light d-print-none w-100" data-bs-theme="dark" style={{backgroundColor: '#222551', width: '100vw', margin: 0, padding: 0}}>
                     <div className="container-fluid">
+                        
+                        {/* Brand Logo */}
+                        <Link href="/" className="navbar-brand me-3 d-flex align-items-center">
+                            <img 
+                                src="https://www.gralix.co/assets/images/resources/logo-gralix.png" 
+                                alt="Gralix Logo" 
+                                className="brand-logo me-2"
+                                style={{ height: '32px', width: 'auto' }}
+                            />
+                        </Link>
                         
                         {/* Mobile toggle */}
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -138,7 +154,7 @@ export default function AppLayout({ children, title }) {
                                 <button 
                                     className="nav-link d-flex lh-1 text-reset p-2 btn btn-link" 
                                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                                    style={{minWidth: 'fit-content'}}
+                                    style={{minWidth: 'fit-content', paddingRight: '1.5rem'}}
                                 >
                                     <span className="avatar avatar-sm bg-primary text-white">
                                         {(auth?.user?.name?.charAt(0)) || 'U'}
@@ -194,29 +210,51 @@ export default function AppLayout({ children, title }) {
 
                 {/* Main content - Full width without wrapper */}
                 <main className="main-content">
-                    {/* Flash messages */}
+                    {/* Flash messages - Banner style for backup if toasts don't work */}
+                    {flash?.success && (
+                        <div className="container-fluid px-4 pt-3">
+                            <div className="alert alert-success alert-dismissible fade show" role="alert" style={{ backgroundColor: '#d4edda', borderColor: '#c3e6cb', color: '#155724' }}>
+                                <div className="d-flex align-items-center">
+                                    <svg className="me-2" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 2.384 6.323a.75.75 0 0 0-1.06 1.061l4.293 4.293a.75.75 0 0 0 1.24-.02l4.313-5.245a.75.75 0 0 0-.022-1.08z"/>
+                                    </svg>
+                                    <div className="flex-grow-1">
+                                        <strong>Success: </strong>{flash.success}
+                                    </div>
+                                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
                     {flash?.message && (
                         <div className="container-fluid px-4 pt-3">
-                            <div className="alert alert-success alert-dismissible" role="alert">
-                                <div className="d-flex">
-                                    <div>
-                                        {flash.message}
+                            <div className="alert alert-success alert-dismissible fade show" role="alert" style={{ backgroundColor: '#d4edda', borderColor: '#c3e6cb', color: '#155724' }}>
+                                <div className="d-flex align-items-center">
+                                    <svg className="me-2" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 2.384 6.323a.75.75 0 0 0-1.06 1.061l4.293 4.293a.75.75 0 0 0 1.24-.02l4.313-5.245a.75.75 0 0 0-.022-1.08z"/>
+                                    </svg>
+                                    <div className="flex-grow-1">
+                                        <strong>Success: </strong>{flash.message}
                                     </div>
+                                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                                <a className="btn-close" data-bs-dismiss="alert"></a>
                             </div>
                         </div>
                     )}
                     
                     {flash?.error && (
                         <div className="container-fluid px-4 pt-3">
-                            <div className="alert alert-danger alert-dismissible" role="alert">
-                                <div className="d-flex">
-                                    <div>
-                                        {flash.error}
+                            <div className="alert alert-danger alert-dismissible fade show" role="alert" style={{ backgroundColor: '#f8d7da', borderColor: '#f5c6cb', color: '#721c24' }}>
+                                <div className="d-flex align-items-center">
+                                    <svg className="me-2" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                    </svg>
+                                    <div className="flex-grow-1">
+                                        <strong>Error: </strong>{flash.error}
                                     </div>
+                                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                                <a className="btn-close" data-bs-dismiss="alert"></a>
                             </div>
                         </div>
                     )}

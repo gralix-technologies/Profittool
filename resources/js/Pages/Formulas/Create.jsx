@@ -39,8 +39,7 @@ export default function Create({ products, returnTypes, supportedOperations, fie
                 },
                 onSuccess: (page) => {
                     console.log('Formula form submission successful:', page);
-                    handleSuccess('Formula created successfully!');
-                    router.get('/formulas');
+                    // Let Inertia handle the redirect, success message comes from backend flash data
                 },
                 onError: (errors) => {
                     console.error('Formula form submission error:', errors);

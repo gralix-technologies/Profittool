@@ -20,7 +20,7 @@
         <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
         <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192x192.png">
         <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png">
-        <meta name="theme-color" content="#3385ff">
+        <meta name="theme-color" content="#222551">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -57,7 +57,7 @@
             
             
             .navbar {
-                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                background: #222551;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 padding: 0.75rem 0;
                 flex-shrink: 0;
@@ -98,8 +98,8 @@
             
             .navbar-nav .nav-link.active {
                 color: white !important;
-                background-color: var(--tblr-primary);
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                background-color: #E85C2C;
+                box-shadow: 0 2px 4px rgba(232, 92, 44, 0.3);
             }
             
             .navbar-nav .nav-link-icon {

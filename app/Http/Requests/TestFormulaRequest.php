@@ -17,8 +17,9 @@ class TestFormulaRequest extends FormRequest
     {
         return [
             'expression' => 'required|string|max:1000',
-            'sample_data' => 'required|array',
-            'product_id' => 'nullable|exists:products,id'
+            'sample_data' => 'nullable|array',
+            'product_id' => 'nullable|exists:products,id',
+            'use_real_data' => 'nullable|boolean'
         ];
     }
 

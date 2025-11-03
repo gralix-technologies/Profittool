@@ -151,7 +151,7 @@ export default function BarChartWidget({ widget, dashboardId, isEditing }) {
                         {showLegend && <Legend />}
                         <Bar 
                             dataKey="value" 
-                            fill="#3385ff" 
+                            fill="#222551" 
                             name="Actual"
                             radius={[2, 2, 0, 0]}
                         />

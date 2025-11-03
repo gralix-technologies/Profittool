@@ -39,7 +39,7 @@ html, body {
     left: -50px;
     right: -50px;
     height: 100%;
-    background-color: #1f2937;
+    background-color: #222551;
     z-index: -1;
 }
 
@@ -51,7 +51,7 @@ html, body {
     left: -100vw;
     right: -100vw;
     height: 100%;
-    background-color: #1f2937;
+    background-color: #222551;
     z-index: -2;
 }
 
@@ -67,13 +67,19 @@ html, body {
 /* Ensure user menu doesn't get cut off */
 .navbar-nav .nav-item:last-child {
     flex-shrink: 0;
+    margin-right: 1rem;
+}
+
+/* Add proper spacing for user menu button */
+.navbar-nav .dropdown .nav-link {
+    padding-right: 1.5rem !important;
 }
 
 .navbar-nav .nav-link {
     white-space: nowrap;
     right: 0 !important;
     position: relative !important;
-    background-color: #1f2937 !important;
+    background-color: #222551 !important;
     border: none !important;
     box-shadow: none !important;
 }
@@ -92,11 +98,11 @@ html, body {
     padding: 0 !important;
 }
 
-/* Dark theme enforcement */
+/* Dark theme enforcement - Gralix Blue */
 [data-bs-theme="dark"] .navbar,
 .navbar[data-bs-theme="dark"] {
-    background-color: #1f2937 !important;
-    border-bottom: 1px solid #374151 !important;
+    background-color: #222551 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Override any container constraints */
@@ -115,35 +121,41 @@ html, body {
     width: 100% !important;
 }
 
-/* Blue & Orange Brand Colors */
+/* Gralix Brand Colors - Official */
 :root {
-    /* Primary Brand Colors - Blue Palette */
-    --gralix-primary: #3385ff;
-    --gralix-primary-light: #66a3ff;
-    --gralix-orange: #e75c2d;
-    --gralix-orange-light: #f98a5c;
+    /* Primary Brand Colors - Gralix Blue Palette */
+    --gralix-blue: #222551;
+    --gralix-blue-light: #3d3f6a;
+    --gralix-blue-dark: #1a1b3e;
+    --gralix-primary: #222551; /* Updated to match Gralix Blue */
+    --gralix-primary-light: #3d3f6a;
     
-    /* Extended Blue Palette */
-    --blue-100: #f2f7ff;
-    --blue-200: #cce0ff;
-    --blue-300: #99c2ff;
-    --blue-400: #66a3ff;
-    --blue-500: #3385ff;
-    --blue-600: #0052cc;
-    --blue-700: #004099;
-    --blue-800: #002d66;
-    --blue-900: #001a33;
+    /* Orange Brand Colors - Gralix Orange */
+    --gralix-orange: #E85C2C;
+    --gralix-orange-light: #f0744a;
+    --gralix-orange-dark: #c94d1f;
     
-    /* Extended Orange Palette */
-    --orange-100: #fff5f0;
-    --orange-200: #ffe3d9;
-    --orange-300: #ffb89a;
-    --orange-400: #f98a5c;
-    --orange-500: #e75c2d;
-    --orange-600: #c34b20;
-    --orange-700: #9e3b18;
-    --orange-800: #7d2e13;
-    --orange-900: #5f220e;
+    /* Extended Blue Palette based on Gralix Blue */
+    --blue-100: #eef0f8;
+    --blue-200: #d4d7ea;
+    --blue-300: #a3a8d1;
+    --blue-400: #6d739f;
+    --blue-500: #222551;
+    --blue-600: #1a1b3e;
+    --blue-700: #151530;
+    --blue-800: #0f0f22;
+    --blue-900: #0a0a14;
+    
+    /* Extended Orange Palette based on Gralix Orange */
+    --orange-100: #fef0ec;
+    --orange-200: #fce0d9;
+    --orange-300: #f9b5a6;
+    --orange-400: #f0744a;
+    --orange-500: #E85C2C;
+    --orange-600: #c94d1f;
+    --orange-700: #a03d19;
+    --orange-800: #7a2e13;
+    --orange-900: #5a220e;
     
     /* Neutral Colors */
     --gralix-dark: #212121;
@@ -197,12 +209,12 @@ html, body {
     background-color: #f8f9fa;
 }
 
-/* Login page gradient background */
+/* Login page gradient background - Gralix colors */
 .login-gradient {
     background: linear-gradient(135deg, 
-        var(--blue-500) 0%, 
+        var(--gralix-blue) 0%, 
         var(--blue-400) 25%, 
-        var(--orange-500) 50%, 
+        var(--gralix-orange) 50%, 
         var(--orange-400) 75%, 
         var(--blue-600) 100%);
     background-size: 400% 400%;
@@ -248,34 +260,34 @@ html, body {
 
 .login-gradient .card-header {
     background: transparent !important;
-    border-bottom: 1px solid rgba(51, 133, 255, 0.1) !important;
+    border-bottom: 1px solid rgba(34, 37, 81, 0.1) !important;
 }
 
 /* Login form styling */
 .login-gradient .form-control {
     background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid rgba(51, 133, 255, 0.2) !important;
+    border: 1px solid rgba(34, 37, 81, 0.2) !important;
     backdrop-filter: blur(5px);
 }
 
 .login-gradient .form-control:focus {
     background: rgba(255, 255, 255, 0.95) !important;
     border-color: var(--gralix-primary) !important;
-    box-shadow: 0 0 0 0.2rem rgba(51, 133, 255, 0.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(34, 37, 81, 0.25) !important;
 }
 
-/* Login button styling */
+/* Login button styling - Gralix colors */
 .login-gradient .btn-primary {
-    background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-400) 100%) !important;
+    background: linear-gradient(135deg, var(--gralix-blue) 0%, var(--gralix-orange) 100%) !important;
     border: none !important;
-    box-shadow: 0 4px 15px rgba(51, 133, 255, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(232, 92, 44, 0.3) !important;
     transition: all 0.3s ease !important;
 }
 
 .login-gradient .btn-primary:hover {
-    background: linear-gradient(135deg, var(--blue-400) 0%, var(--blue-600) 100%) !important;
+    background: linear-gradient(135deg, var(--gralix-orange) 0%, var(--orange-600) 100%) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(51, 133, 255, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(232, 92, 44, 0.4) !important;
 }
 
 /* Logo and title styling */
@@ -409,8 +421,8 @@ html, body {
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: var(--gralix-primary);
-    box-shadow: 0 0 0 0.2rem rgba(51, 133, 255, 0.25);
+    border-color: var(--gralix-blue);
+    box-shadow: 0 0 0 0.2rem rgba(34, 37, 81, 0.25);
     background-color: #ffffff;
     color: #212529;
 }
@@ -486,53 +498,59 @@ html, body {
 /* Fix white buttons - make them visible with proper contrast */
 .btn:not(.btn-primary):not(.btn-outline-primary):not(.btn-outline-secondary):not(.btn-outline-danger) {
     background-color: #f8f9fa !important;
-    border-color: var(--blue-500) !important;
-    color: var(--blue-500) !important;
+    border-color: var(--gralix-blue) !important;
+    color: var(--gralix-blue) !important;
     font-weight: 500 !important;
 }
 
 .btn:not(.btn-primary):not(.btn-outline-primary):not(.btn-outline-secondary):not(.btn-outline-danger):hover {
-    background-color: var(--blue-500) !important;
-    border-color: var(--blue-500) !important;
+    background-color: var(--gralix-blue) !important;
+    border-color: var(--gralix-blue) !important;
     color: #ffffff !important;
 }
 
 /* Standard Tabler primary buttons with Gralix colors */
 .btn-primary {
-    background-color: var(--gralix-primary);
-    border-color: var(--gralix-primary);
+    background-color: var(--gralix-orange);
+    border-color: var(--gralix-orange);
     color: #ffffff;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: var(--gralix-primary-light);
-    border-color: var(--gralix-primary-light);
+    background-color: var(--orange-600);
+    border-color: var(--orange-600);
     color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(232, 92, 44, 0.3);
 }
 
 /* Outline buttons */
 .btn-outline-primary {
-    color: var(--gralix-primary);
-    border-color: var(--gralix-primary);
+    color: var(--gralix-orange);
+    border-color: var(--gralix-orange);
     background-color: transparent;
+    transition: all 0.2s ease;
 }
 
 .btn-outline-primary:hover {
-    background-color: var(--gralix-primary);
-    border-color: var(--gralix-primary);
+    background-color: var(--gralix-orange);
+    border-color: var(--gralix-orange);
     color: white;
 }
 
 .btn-outline-secondary {
-    color: var(--blue-500) !important;
-    border-color: var(--blue-500) !important;
+    color: var(--gralix-blue) !important;
+    border-color: var(--gralix-blue) !important;
     background-color: #f8f9fa !important;
     font-weight: 500 !important;
+    transition: all 0.2s ease;
 }
 
 .btn-outline-secondary:hover {
-    background-color: var(--blue-500) !important;
-    border-color: var(--blue-500) !important;
+    background-color: var(--gralix-blue) !important;
+    border-color: var(--gralix-blue) !important;
     color: #ffffff !important;
 }
 
@@ -548,9 +566,9 @@ html, body {
     color: white;
 }
 
-/* Dark navigation background to make purple elements visible */
+/* Dark navigation background - Gralix Blue */
 .navbar {
-    background-color: #212121 !important;
+    background-color: #222551 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     position: relative;
@@ -569,16 +587,16 @@ html, body {
 }
 
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(232, 92, 44, 0.15);
     color: white !important;
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(232, 92, 44, 0.2);
 }
 
 .nav-link.active {
-    background-color: var(--gralix-primary);
+    background-color: var(--gralix-orange);
     color: white !important;
-    box-shadow: 0 2px 8px rgba(106, 27, 154, 0.3);
+    box-shadow: 0 2px 8px rgba(232, 92, 44, 0.3);
 }
 
 /* Standard Tabler page header */
@@ -1076,28 +1094,28 @@ small, .small {
 /* Fix very light button backgrounds */
 .btn:not(.btn-primary):not(.btn-outline-primary):not(.btn-outline-secondary):not(.btn-outline-danger) {
     background-color: #f1f3f4 !important;
-    border-color: var(--blue-500) !important;
-    color: var(--blue-500) !important;
+    border-color: var(--gralix-blue) !important;
+    color: var(--gralix-blue) !important;
 }
 
 .btn-outline-secondary {
     background-color: #f1f3f4 !important;
-    border-color: var(--blue-500) !important;
-    color: var(--blue-500) !important;
+    border-color: var(--gralix-blue) !important;
+    color: var(--gralix-blue) !important;
 }
 
 /* Fix table button backgrounds */
 .table .btn-outline-secondary {
     background-color: #f1f3f4 !important;
-    border-color: var(--blue-500) !important;
-    color: var(--blue-500) !important;
+    border-color: var(--gralix-blue) !important;
+    color: var(--gralix-blue) !important;
 }
 
 /* Fix search section buttons */
 .card-body .btn-outline-secondary {
     background-color: #f1f3f4 !important;
-    border-color: var(--blue-500) !important;
-    color: var(--blue-500) !important;
+    border-color: var(--gralix-blue) !important;
+    color: var(--gralix-blue) !important;
 }
 
 /* Fix very light borders */
@@ -1131,14 +1149,14 @@ small, .small {
 .nav-tabs .nav-link:hover {
     background-color: #f8f9fa !important;
     color: #212529 !important;
-    border-bottom-color: #3385ff;
+    border-bottom-color: var(--gralix-blue);
     text-decoration: none;
 }
 
 .nav-tabs .nav-link.active {
     color: #212529 !important;
     background-color: #ffffff !important;
-    border-bottom-color: #3385ff !important;
+    border-bottom-color: var(--gralix-blue) !important;
     font-weight: 600;
     border-bottom-width: 3px;
 }
@@ -1158,14 +1176,14 @@ small, .small {
 .card-header-tabs .nav-link:hover {
     background-color: #f8f9fa !important;
     color: #212529 !important;
-    border-bottom-color: #3385ff;
+    border-bottom-color: var(--gralix-blue);
     text-decoration: none;
 }
 
 .card-header-tabs .nav-link.active {
     color: #212529 !important;
     background-color: #ffffff !important;
-    border-bottom-color: #3385ff !important;
+    border-bottom-color: var(--gralix-blue) !important;
     font-weight: 600;
     border-bottom-width: 3px;
 }
@@ -1195,7 +1213,7 @@ small, .small {
 .nav-tabs .nav-link.active svg,
 .card-header-tabs .nav-link.active svg {
     opacity: 1;
-    color: #3385ff;
+    color: var(--gralix-blue);
 }
 
 /* Fix form control borders */
@@ -1207,7 +1225,7 @@ small, .small {
 
 .form-control:focus, .form-select:focus {
     border-color: var(--blue-500) !important;
-    box-shadow: 0 0 0 0.2rem rgba(51, 133, 255, 0.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(34, 37, 81, 0.25) !important;
 }
 
 /* Fix very light disabled backgrounds */
@@ -1632,6 +1650,15 @@ small, .small {
     
     .navbar {
         background: linear-gradient(135deg, var(--gralix-dark) 0%, #1a1a1a 100%);
+    }
+    
+    /* Reduce spacing on mobile for user menu */
+    .navbar-nav .nav-item:last-child {
+        margin-right: 0.5rem;
+    }
+    
+    .navbar-nav .dropdown .nav-link {
+        padding-right: 0.75rem !important;
     }
 }
 

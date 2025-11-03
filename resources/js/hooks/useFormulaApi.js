@@ -23,7 +23,7 @@ export const useFormulaApi = () => {
             const response = await apiClient.post('/formulas/test', {
                 expression,
                 product_id: productId,
-                sample_data: sampleData,
+                sample_data: sampleData || [],
                 use_real_data: false
             });
             
@@ -31,13 +31,19 @@ export const useFormulaApi = () => {
             const result = response.data;
             
             setValidationResult(result);
+            
+            // Show success message if validation passes
+            if (result.valid) {
+                handleSuccess(result.message || 'Formula is valid', 'Validation Success');
+            }
+            
             return result;
         }, {
             showToast: false // Don't show toast for validation errors
         }).finally(() => {
             setLoading(false);
         });
-    }, [handleAsync]);
+    }, [handleAsync, handleSuccess]);
 
     /**
      * Test a formula with real data

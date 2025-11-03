@@ -178,10 +178,10 @@ export default function LineChartWidget({ widget, dashboardId, isEditing }) {
                         <Line 
                             type="monotone" 
                             dataKey="value" 
-                            stroke="#3385ff" 
+                            stroke="#222551" 
                             strokeWidth={2}
-                            dot={{ fill: '#3385ff', strokeWidth: 2, r: 4 }}
-                            activeDot={{ r: 6, stroke: '#3385ff', strokeWidth: 2 }}
+                            dot={{ fill: '#222551', strokeWidth: 2, r: 4 }}
+                            activeDot={{ r: 6, stroke: '#222551', strokeWidth: 2 }}
                             name="Current"
                         />
                         {Array.isArray(data) && data.length > 0 && data.some(item => item.previous !== undefined) && (
